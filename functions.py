@@ -20,11 +20,11 @@ def get_data(directory, disabled):
     df_rc_length = df_meta2.groupby(['id_patient'])['Right cycle length'].sum()
     df_rc_length.name = 'Right cycle length SUM'
 
-    df_lc_length_avg = df_meta2.groupby(['id_patient'])['Left cycle length'].mean()
-    df_lc_length_avg.name = 'Left cycle length AVG'
+    # df_lc_length_avg = df_meta2.groupby(['id_patient'])['Left cycle length'].mean()
+    # df_lc_length_avg.name = 'Left cycle length AVG'
 
-    df_rc_length_avg = df_meta2.groupby(['id_patient'])['Right cycle length'].mean()
-    df_rc_length_avg.name = 'Right cycle length AVG'
+    # df_rc_length_avg = df_meta2.groupby(['id_patient'])['Right cycle length'].mean()
+    # df_rc_length_avg.name = 'Right cycle length AVG'
 
     df_disease = df_meta2.groupby(['id_patient'])['Disease'].first()
     df_rate = df_meta2.groupby(['id_patient'])['Rate'].first()
@@ -32,8 +32,8 @@ def get_data(directory, disabled):
     df_meta_summary = pd.concat([df_disease,
                                  df_lc_length,
                                  df_rc_length,
-                                 df_lc_length_avg,
-                                 df_rc_length_avg,
+                                #  df_lc_length_avg,
+                                #  df_rc_length_avg,
                                  df_rate],
                                  axis=1)
 
@@ -54,9 +54,21 @@ def get_data(directory, disabled):
             right_dict[id_patient].append(right[i][j][1])
 
     return df_meta2, df_meta_summary, left_dict, right_dict
-    
 
 def plot(df_patient, dict_left, dict_right):
+
+    """
+    Plot data from df_patient along with left and right dictionaries.
+
+    Parameters:
+        df_patient (DataFrame): DataFrame containing patient data.
+        dict_left (dict): Dictionary containing left data.
+        dict_right (dict): Dictionary containing right data.
+
+    Returns:
+        None
+    """
+
     # dict_left = dict_left_HC
     # dict_right = dict_right_HC
 
@@ -111,7 +123,7 @@ def plot(df_patient, dict_left, dict_right):
         axs[0, 1].set_title(f'FFT: Left leg patient {id_patient}')
         axs[0, 1].set_xlabel('Frequency (Hz)')
         axs[0, 1].set_ylabel('Magnitude')
-        axs[0, 1].set_xlim([-0.5, 5])
+        axs[0, 1].set_xlim([0.5, 5])
         axs[0, 1].set_xticks(np.arange(0, 5, 0.5))
         # axs[0, 1].set_ylim([500, ])
 
@@ -124,7 +136,7 @@ def plot(df_patient, dict_left, dict_right):
         axs[1, 1].set_title(f'FFT: Right leg patient {id_patient}')
         axs[1, 1].set_xlabel('Frequency (Hz)')
         axs[1, 1].set_ylabel('Magnitude')
-        axs[1, 1].set_xlim([-0.5, 5])
+        axs[1, 1].set_xlim([0.5, 5])
         axs[1, 1].set_xticks(np.arange(0, 5, 0.5))
         # axs[1, 1].set_ylim([500, ])
      
@@ -144,7 +156,7 @@ def plot(df_patient, dict_left, dict_right):
 
         # Plot scalogram for right leg
         axs[1, 2].imshow(np.abs(coefficients_right),
-                         spect='auto',
+                         aspect='auto',
                          extent=[0, right_length, frequencies_right[-1], frequencies_right[0]],
                          cmap='jet')
         axs[1, 2].set_title(f'Wavelet transform: Right leg patient {id_patient}')
