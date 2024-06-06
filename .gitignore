@@ -1,4 +1,7 @@
 dataset/
 main.py
+*.json
+*.csv
+*.img
 
 !dataset/data_preprocessing.py
