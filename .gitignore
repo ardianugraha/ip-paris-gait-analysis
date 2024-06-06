@@ -6,5 +6,7 @@ dataset/
 *.json
 *.csv
 *.img
+__pycache__/
+.vscode/
 
 !dataset/data_preprocessing.py
