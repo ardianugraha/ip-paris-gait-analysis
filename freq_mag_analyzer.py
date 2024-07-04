@@ -2,7 +2,6 @@ import pandas as pd
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
-from sklearn.cluster import AgglomerativeClustering, KMeans
 from sklearn.mixture import GaussianMixture
 from scipy import stats
 
@@ -261,13 +260,13 @@ class FrequencyMagnitudeAnalyzer:
 
         # Add color bars for both surfaces
         left_cbar_ax = fig.add_axes([0.92, 0.15, 0.02, 0.7]) # [left, bottom, width, height]
-        # right_cbar_ax = fig.add_axes([1.05, 0.15, 0.02, 0.7]) # [left, bottom, width, height]
+        right_cbar_ax = fig.add_axes([1.05, 0.15, 0.02, 0.7]) # [left, bottom, width, height]
 
         if disease == 'HC':
             fig.colorbar(surf_left, cax=left_cbar_ax, orientation='vertical', label='Count (Left)')
             fig.colorbar(surf_right, cax=right_cbar_ax, orientation='vertical', label='Count (Right)')
         else:
-            # fig.colorbar(surf_left, cax=right_cbar_ax, orientation='vertical', label='Count (Non-Impacted)')
+            fig.colorbar(surf_left, cax=right_cbar_ax, orientation='vertical', label='Count (Non-Impacted)')
             fig.colorbar(surf_right, cax=left_cbar_ax, orientation='vertical', label='Count (Impacted)')
 
         plt.show()
